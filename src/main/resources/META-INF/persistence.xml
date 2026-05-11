@@ -1,1 +1,21 @@
-<creacion>Creación de la base de datos</creacion>
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="PE9streaming">
+        <provider>com.objectdb.jpa.Provider</provider>
+
+        <class>com.streaming.model.Pelicula</class>
+        <class>com.streaming.model.Pelicula</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="db/streaming_plataforma.odb"/>
+            <property name="javax.persistence.jdbc.user" value="admin"/>
+            <property name="javax.persistence.jdbc.password" value="admin"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
