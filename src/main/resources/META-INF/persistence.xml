@@ -8,8 +8,8 @@
     <persistence-unit name="PE9streaming">
         <provider>com.objectdb.jpa.Provider</provider>
 
-        <class>com.streaming.model.Pelicula</class>
-        <class>com.streaming.model.Pelicula</class>
+        <class>model.Pelicula</class>
+        <class>model.Serie</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="db/streaming_plataforma.odb"/>
