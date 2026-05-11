@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="bin">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/bin/javax.persistence-api-2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/bin/explorer-2.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/bin/javax.transaction-api-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/bin/objectdb-2.9.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
