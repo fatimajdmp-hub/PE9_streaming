@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="doc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/doc/jakarta.persistence-api-3.2.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/objectdb-2.9.5/doc/javax.persistence-api-2.2-javadoc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
