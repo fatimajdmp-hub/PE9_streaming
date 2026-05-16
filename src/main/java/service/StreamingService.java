@@ -1,7 +1,6 @@
 package service;
 
 
-
 import model.Pelicula;
 import model.Serie;
 import repository.StreamingRepository;
@@ -12,6 +11,7 @@ import java.util.List;
  * Capa de servicio encargada de gestionar la lógica de negocio de la plataforma de streaming.
  * Actúa como intermediaria entre la interfaz de usuario (Main) y la capa de datos (Repository),
  * aplicando validaciones y reglas de control antes de persistir la información.
+ *
  * @author Alejandro Andrade Morales
  * @since 11/05/20260
  */
@@ -23,24 +23,28 @@ public class StreamingService {
     private StreamingRepository repository = new StreamingRepository();
 
     /**
-     * Registra una nueva serie en el sistema tras validar los datos de entrada.
-     * @param titulo El nombre de la serie. No puede ser nulo ni estar vacío.
-     * @param temporadas Cantidad de temporadas de la serie.
-     * @param genero Categoría temática de la serie.
+     * Metodo que registra la serie con su constructor
+     *
+     * @param titulo          titulo de la serie
+     * @param genero          genero de la serie
+     * @param anioEstreno     año de estreno
+     * @param duracionMinutos duracion en minutos
+     * @param sinopsis        Sinopsis
      */
-    public void registrarSerie(String titulo, int temporadas, String genero) {
+    public void registrarSerie(String titulo, String genero, int anioEstreno, int duracionMinutos, String sinopsis) {
         // Validación de lógica de negocio: el título es obligatorio
         if (titulo == null || titulo.isEmpty()) {
             System.out.println("Error: El título no puede estar vacío.");
             return;
         }
 
-        Serie nuevaSerie = new Serie(titulo, temporadas, genero);
+        Serie nuevaSerie = new Serie(titulo, genero, anioEstreno, duracionMinutos, sinopsis);
         repository.guardarSerie(nuevaSerie);
     }
 
     /**
      * Obtiene el listado completo de series disponibles en la plataforma.
+     *
      * @return List de objetos Serie.
      */
     public List<Serie> obtenerTodasLasSeries() {
@@ -49,17 +53,21 @@ public class StreamingService {
 
     /**
      * Registra una nueva película en la base de datos.
-     * @param titulo Nombre de la película.
-     * @param duracion Duración en minutos o número de partes.
-     * @param director Género o director asociado a la película.
+     *
+     * @param titulo          Nombre de la película.
+     * @param duracionMinutos Duración en minutos o número de partes.
+     * @param genero          Genero de la pelicula
+     * @param anioEstreno     Año de estreno de la pelicula
+     * @param sinopsis        Sinopsis de la pelicula
      */
-    public void registrarPelicula(String titulo, int duracion, String director) {
-        Pelicula peli = new Pelicula(titulo, duracion, director);
+    public void registrarPelicula(String titulo, String genero, int anioEstreno, int duracionMinutos, String sinopsis) {
+        Pelicula peli = new Pelicula(titulo, genero, anioEstreno, duracionMinutos, sinopsis);
         repository.guardarPelicula(peli);
     }
 
     /**
      * Recupera el catálogo completo de películas almacenadas.
+     *
      * @return List de objetos Pelicula.
      */
     public List<Pelicula> obtenerTodasLasPeliculas() {
