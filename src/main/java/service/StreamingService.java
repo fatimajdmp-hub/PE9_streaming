@@ -1,10 +1,12 @@
 package service;
 
 
-import model.Pelicula;
-import model.Serie;
+import model.*;
 import repository.StreamingRepository;
+import util.JPAUtil;
 
+import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -72,5 +74,103 @@ public class StreamingService {
      */
     public List<Pelicula> obtenerTodasLasPeliculas() {
         return repository.listarPelicula();
+    }
+
+    /**
+     * Registra un nuevo usuario en la base de datos.
+     *
+     * @param nombre   Nombre del usuario
+     * @param email    Email del usuario
+     * @param password Contraseña del usuario
+     */
+    public void registrarUsuario(String nombre, String email, String password) {
+        if (nombre == null || nombre.isEmpty()) {
+            System.out.println("Error: El nombre no puede estar vacío.");
+            return;
+        }
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(new Usuario(nombre, email, password));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Busca un usuario por su ID.
+     *
+     * @param id ID del usuario
+     * @return Objeto Usuario o null si no existe.
+     */
+    public Usuario buscarUsuarioPorId(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.find(Usuario.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Registra una suscripción para un usuario existente.
+     *
+     * @param plan        Plan de suscripción (BASICO, ESTANDAR, PREMIUM)
+     * @param fechaInicio Fecha de inicio
+     * @param fechaFin    Fecha de fin
+     * @param usuarioId   ID del usuario
+     */
+    public void registrarSuscripcion(String plan, LocalDate fechaInicio, LocalDate fechaFin, Long usuarioId) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            Usuario usuario = em.find(Usuario.class, usuarioId);
+            if (usuario == null) {
+                System.out.println("Error: Usuario no encontrado.");
+                return;
+            }
+            em.getTransaction().begin();
+            em.persist(new Subscripcion(plan, fechaInicio, fechaFin, usuario));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Registra un perfil para un usuario existente.
+     *
+     * @param nombre    Nombre del perfil
+     * @param infantil  Si es perfil infantil
+     * @param usuarioId ID del usuario
+     */
+    public void registrarPerfil(String nombre, boolean infantil, Long usuarioId) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            Usuario usuario = em.find(Usuario.class, usuarioId);
+            if (usuario == null) {
+                System.out.println("Error: Usuario no encontrado.");
+                return;
+            }
+            em.getTransaction().begin();
+            em.persist(new Perfil(nombre, infantil, usuario));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Obtiene el listado completo de valoraciones registradas.
+     *
+     * @return List de objetos Valoracion.
+     */
+    public List<Valoracion> obtenerTodasLasValoraciones() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT v FROM Valoracion v", Valoracion.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 }
