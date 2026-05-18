@@ -1,8 +1,7 @@
 package repository;
 
 
-import model.Pelicula;
-import model.Serie;
+import model.*;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -67,6 +66,103 @@ public class StreamingRepository {
         try {
             // Se utiliza la consulta JPQL para obtener todas las entidades de tipo Pelicula
             return em.createQuery("SELECT p FROM Pelicula p", Pelicula.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Registra un nuevo usuario en la base de datos.
+     *
+     * @param nombre   Nombre del usuario
+     * @param email    Email del usuario
+     * @param password Contraseña del usuario
+     */
+    public void registrarUsuario(String nombre, String email, String password) {
+        if (nombre == null || nombre.isEmpty()) {
+            System.out.println("Error: El nombre no puede estar vacío.");
+            return;
+        }
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(new Usuario(nombre, email, password));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void guardarUsuario(Usuario usuario) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(usuario);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Usuario buscarUsuarioPorId(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.find(Usuario.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public void guardarSuscripcion(Subscripcion suscripcion) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(suscripcion);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void guardarPerfil(Perfil perfil) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(perfil);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    public void guardarValoracion(Valoracion valoracion) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(valoracion);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Valoracion> listarValoraciones() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT v FROM Valoracion v", Valoracion.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    public void guardarReproduccion(Reproduccion reproduccion) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(reproduccion);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
